@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="uk" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fragravo — Преміальна Парфумерія</title>
+  <style>
+    html, body { 
+      scroll-behavior: smooth !important; 
+    }
+    body {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Georgia', serif; min-height: 100vh; color: #111111;
+      background-color: #fcfbfa;
+      background-image: linear-gradient(135deg, #fcfbfa 0%, #f5f2eb 100%);
+    }
+    * { box-sizing: border-box; }
+    
+    /* Шапка сайту */
+    .site-header {
+      background-color: #ffffff; position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); border-bottom: 1px solid #eeeeee;
+    }
+    .header-top { display: flex; justify-content: center; padding: 25px 20px 15px 20px; }
+    .logo-wrapper { border: 1px solid #111111; padding: 10px 40px; background-color: #ffffff; }
+    .logo { font-size: 38px; font-weight: 700; text-decoration: none; letter-spacing: 6px; text-transform: uppercase; color: #111111; display: block; }
+    .header-bottom { border-top: 1px solid #eeeeee; padding: 15px 0; }
+    .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+    .user-greeting { font-family: sans-serif; font-size: 15px; color: #111111; }
+    .user-name { font-weight: 700; }
+    
+    /* Посилання */
+    .nav-list { list-style: none; display: flex; align-items: center; gap: 30px; }
+    .nav-link { 
+      font-family: sans-serif; text-decoration: none; color: #111111; font-weight: 500; font-size: 14px; text-transform: uppercase; 
+      position: relative; padding: 4px 0; transition: color 0.3s ease;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background-color: #111111; transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link:hover { color: #555555; }
+
+    .catalog-btn { 
+      font-family: sans-serif; display: inline-flex; align-items: center; background-color: #111111; color: #ffffff; text-decoration: none; padding: 10px 20px; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; 
+      transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .catalog-btn:hover { 
+      background-color: #333333; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); 
+    }
+    
+    /* Головний екран */
+    .hero-section { width: 100%; height: 65vh; background-color: #222222; display: flex; align-items: center; justify-content: center; text-align: center; color: #ffffff; padding: 0 20px; }
+    .hero-title { font-size: 42px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; }
+    
+    /* ДЕКОРАТИВНИЙ БЛОК ПОШУКУ */
+    .search-box {
+      max-width: 500px;
+      margin: 0 auto 30px auto;
+      display: flex;
+      background: #ffffff;
+      padding: 6px;
+      border: 1px solid #111111;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .search-input {
+      flex: 1;
+      border: none;
+      padding: 12px 15px;
+      font-size: 15px;
+      font-family: sans-serif;
+      outline: none;
+      color: #111111;
+    }
+    .search-btn {
+      background: #111111;
+      color: #ffffff;
+      border: none;
+      padding: 0 25px;
+      font-family: sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .search-btn:hover {
+      background: #333333;
+    }
+
+    .hero-action-btn { 
+      font-family: sans-serif; display: inline-block; background-color: transparent; color: #ffffff; border: 1px solid #ffffff; text-decoration: none; padding: 14px 35px; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+    .hero-action-btn:hover { background-color: #ffffff; color: #111111; }
+    
+    /* Секція каталогу та брендів */
+    .catalog-section { max-width: 1200px; margin: 80px auto; padding: 0 20px; scroll-margin-top: 160px; }
+    .section-title { font-size: 32px; text-align: center; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 50px; }
+    
+    .brand-block { margin-bottom: 60px; }
+    .brand-name-title { font-size: 22px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 25px; color: #111111; border-bottom: 1px solid #111111; padding-bottom: 8px; display: inline-block; }
+    
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+    .product-card { background: #ffffff; border: 1px solid #eeeeee; padding: 24px; text-align: center; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.06); }
+    
+    .product-img-box { width: 100%; height: 220px; background-color: #f5f2eb; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; color: #666; font-size: 14px; text-transform: uppercase; }
+    .product-name { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .product-price { font-size: 17px; font-weight: 700; margin-bottom: 20px; }
+    
+    .buy-btn { 
+      font-family: sans-serif; display: block; width: 100%; background-color: transparent; color: #111111; border: 1px solid #111111; padding: 12px; font-size: 13px; font-weight: 600; text-transform: uppercase; text-decoration: none; 
+      transition: all 0.3s ease;
+    }
+    .buy-btn:hover { background-color: #111111; color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    
+    /* Про нас */
+    .about-section { max-width: 800px; margin: 100px auto; padding: 0 20px; text-align: center; scroll-margin-top: 160px; }
+    .about-text-wrapper { background: #ffffff; border: 1px solid #eeeeee; padding: 40px 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+    .about-text { font-size: 16px; line-height: 1.8; color: #333333; margin-bottom: 15px; }
+    .about-text:last-child { margin-bottom: 0; font-weight: 600; color: #111111; }
+    
+    /* Контакти */
+    .contacts-section { max-width: 1200px; margin: 100px auto 40px auto; padding: 40px 20px; border-top: 1px solid #eeeeee; text-align: center; scroll-margin-top: 160px; }
+    .contacts-grid { display: flex; justify-content: center; gap: 50px; font-family: sans-serif; }
+    
+    /* Попап */
+    .order-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .order-popup:target { opacity: 1; pointer-events: auto; }
+    .popup-content { background-color: #ffffff; padding: 40px; width: 100%; max-width: 400px; border: 1px solid #111111; position: relative; }
+    .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; text-decoration: none; color: #111111; }
+    .form-group { margin-bottom: 15px; text-align: left; font-family: sans-serif; }
+    .form-group label { display: block; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; }
+    .form-input { width: 100%; padding: 10px; border: 1px solid #cccccc; outline: none; }
+    .submit-btn { font-family: sans-serif; width: 100%; background-color: #111111; color: #ffffff; border: none; padding: 12px; font-size: 13px; text-transform: uppercase; cursor: pointer; transition: background-color 0.3s; }
+    .submit-btn:hover { background-color: #333333; }
+
+    @media (max-width: 768px) {
+      .header-container { flex-direction: column; gap: 15px; text-align: center; }
+      .nav-list { flex-direction: column; gap: 12px; }
+      .catalog-section, .about-section, .contacts-section { scroll-margin-top: 240px; }
+      .contacts-grid { flex-direction: column; gap: 20px; }
+      .hero-title { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-top">
+      <div class="logo-wrapper">
+        <a href="#" class="logo">fragravo</a>
+      </div>
+    </div>
+    <div class="header-bottom">
+      <div class="header-container">
+        <div class="user-greeting">Вітаємо, <span class="user-name">Гість</span></div>
+        <nav class="main-navigation">
+          <ul class="nav-list">
+            <li><a href="#catalog" class="catalog-btn">Каталог товарів</a></li>
+            <li><a href="#about" class="nav-link">inst:fragravo.ua</a></li>
+            <li><a href="#contacts" class="nav-link">096 980 68 51</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero-section">
+    <div style="width: 100%; max-width: 600px;">
+      <h1 class="hero-title">Преміальна парфумерія</h1>
+      
+      <!-- ФОРМА ПОШУКУ (Працює як пошук по сторінці) -->
+      <form action="#" method="GET" class="search-box" onsubmit="window.find(this.search.value); return false;">
+        <input type="search" name="search" class="search-input" placeholder="Шукати бренд або аромат" required>
+        <button type="submit" class="search-btn">Знайти</button>
+      </form>
+
+      <a href="#catalog" class="hero-action-btn">Перейти до каталогу</a>
+    </div>
+  </section>
+
+  <section id="catalog" class="catalog-section">
+    <h2 class="section-title">Наші Аромати</h2>
+    
+     <!-- БЛОК БРЕНДУ: ARMANI -->
+    <div class="brand-block">
+      <h3 class="brand-name-title">Giorgio Armani</h3>
+      <div class="products-grid">
+        <div class="product-card">
+           <img src="https://www.brocard.ua/media/catalog/product/cache/V13742018/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvM1wvNlwvMzYxNDI3MzMzNjM4M18xLmpwZyJ9/armani-emporio-armani-stronger-with-you-absolutely.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">SWY Absolutely</h4>
+          <div class="product-price">100ml - 4 700₴</div>
+          <div class="product-price">50ml - 3 700₴</div>
+        </div>
+        <div class="product-card">
+           <img src="https://www.brocard.ua/media/catalog/product/cache/V06843412/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvM1wvNlwvMzYxNDI3MjIyNTcxOF8xLmpwZyJ9/armani-emporio-armani-stronger-with-you-intensely.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">SWY Intensely</h4>
+       <div class="product-price">100ml - 5 000₴</div>
+          <div class="product-price">50ml - 3 800₴</div>
+        </div>
+      </div>
+    </div>
+     <!-- БЛОК БРЕНДУ: MANCERA -->
+    <div class="brand-block">
+      <h3 class="brand-name-title">Mancera</h3>
+      <div class="products-grid">
+        <div class="product-card">
+           <img src="https://www.brocard.ua/media/catalog/product/cache/V15353537/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvM1wvN1wvMzc2MDI2NTE5NDUxM18xLmpwZyJ9/mancera-intense-red-tobacco.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Red Tobacco</h4>
+          <div class="product-price">120ml - 6 000₴</div>
+          <div class="product-price">60ml - 4 200₴</div>
+        </div>
+        <div class="product-card">
+           <img src="https://www.brocard.ua/media/catalog/product/cache/V15353237/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvM1wvN1wvMzc2MDI2NTE5NDQ1Ml8xLmpwZyJ9/mancera-cosmic-pepper.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Cosmic Pepper</h4>
+         <div class="product-price">120ml - 6 000₴</div>
+          <div class="product-price">60ml - 3 700₴</div>
+        </div>
+      </div>
+    </div>
+        <!-- БЛОК БРЕНДУ: JEAN PAUL GAULTIER -->
+    <div class="brand-block">
+      <h3 class="brand-name-title">JEAN PAUL GAULTIER</h3>
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V07019424/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvOFwvNFwvODQzNTQxNTAxNzIwNl8xLmpwZyJ9/jean-paul-gaultier-le-beau.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Le Beau</h4>
+           <div class="product-price">125ml - 4 800₴</div>
+          <div class="product-price">75ml - 3 700₴</div>
+        </div>
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V09044832/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvOFwvNFwvODQzNTQxNTAzMjMxNV8xLmpwZyJ9/jean-paul-gaultier-le-male-le-parfum.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Le Male Le Parfum</h4>
+          <div class="product-price">125ml - 5 900₴</div>
+          <div class="product-price">75ml - 4 500₴</div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-block">
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V161214187/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvOFwvNFwvODQzNTQxNTA5MTI0NF8xLmpwZyJ9/jean-paul-gaultier-le-beau-paradise-garden.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Le Beau Paradise Garden</h4>
+         <div class="product-price">125ml - 5 900₴</div>
+          <div class="product-price">75ml - 4 000₴</div>
+        </div>
+         <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V143162174/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvOFwvNFwvODQzNTQxNTA2MjIxM18xLmpwZyJ9/jean-paul-gaultier-le-beau-le-parfum.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Le Beau Le Parfum</h4>
+          <div class="product-price">Тимчасово немає в наявності
+</div>
+        </div>
+      </div>
+    </div>
+     <!-- БЛОК БРЕНДУ: VALENTINO -->
+    <div class="brand-block">
+      <h3 class="brand-name-title">VALENTINO</h3>
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V22353223/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvM1wvNlwvMzYxNDI3NDYyNjg3Ml8xLmpwZyJ9/valentino-born-in-roma-uomo-purple-melancholia.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Born In Roma Uomo Purple Melancholia</h4>
+          <div class="product-price">100ml - 5 000₴</div>
+          <div class="product-price">50ml - 3 700₴</div>
+        </div>
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V15197521/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvM1wvNlwvMzYxNDI3Mzc5MDgyNl8xLmpwZyJ9/valentino-born-in-roma-uomo-intense.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Born in Roma Uomo Intense</h4>
+           <div class="product-price">100ml - 4 700₴</div>
+          <div class="product-price">50ml - 3 700₴</div>
+        </div>
+      </div>
+    </div>
+    <!-- БЛОК БРЕНДУ: MOSCHINO -->
+    <div class="brand-block">
+      <h3 class="brand-name-title">MOSCHINO</h3>
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V08212216/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvOFwvMFwvODAxMTAwMzg0NTEzMl8xLmpwZyJ9/moschino-toy-boy.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Toy Boy</h4>
+         <div class="product-price">100ml - 4 200₴</div>
+          <div class="product-price">50ml - 3 300₴</div>
+        </div>
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V15332021/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvOFwvMFwvODAxMTAwMzg3ODYxMV8xLmpwZyJ9/moschino-toy-2-pearl.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Toy 2 Pearl</h4>
+          <div class="product-price">100ml - 4 200₴</div>
+          <div class="product-price">50ml - 3 300₴</div>
+        </div>
+      </div>
+    </div>
+    <!-- БЛОК БРЕНДУ: YVES SAINT LAURENT -->
+    <div class="brand-block">
+      <h3 class="brand-name-title">YVES SAINT LAURENT</h3>
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V06843212/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvM1wvNlwvMzYxNDI3MjA1MDM1OF8xLmpwZyJ9/yves-saint-laurent-y.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Y</h4>
+          <div class="product-price">100ml - 5 200₴</div>
+          <div class="product-price">60ml - 3 900₴</div>
+        </div>
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V081744157/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvM1wvNlwvMzYxNDI3MjY0ODQyNV8xLmpwZyJ9/yves-saint-laurent-libre.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Libre</h4>
+           <div class="product-price">50ml - 4 700₴</div>
+          <div class="product-price">30ml - 3 500₴</div>
+        </div>
+      </div>
+    </div>
+    <!-- БЛОК БРЕНДУ: DIOR -->
+    <div class="brand-block">
+      <h3 class="brand-name-title">DIOR</h3>
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V01301495/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvM1wvM1wvMzM0ODkwMTM2ODI1NF8xLmpwZyJ9/dior-sauvage.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Sauvage</h4>
+          <div class="product-price">60ml - 4 700 ₴</div>
+        </div>
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V140281156/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvM1wvM1wvMzM0ODkwMTU2NzU3Ml8xLmpwZyJ9/dior-sauvage.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Sauvage Elixir</h4>
+          <div class="product-price">60ml - 7 500 ₴</div>
+        </div>
+      </div>
+    </div>
+       <!-- БЛОК БРЕНДУ: CREED -->
+    <div class="brand-block">
+      <h3 class="brand-name-title">CREED</h3>
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="https://content.rozetka.com.ua/goods/images/big/650072913.jpg" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Aventus</h4>
+          <div class="product-price">Тимчасово немає в наявності
+</div>
+        </div>
+        <div class="product-card">
+          <img src="https://bonjur.com.ua/content/images/45/600x600l80mc0/creed-aventus-cologne-cholovichi-100-ml-edp-tester-frantsiia-99181806395901.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Aventus Cologne</h4>
+          <div class="product-price">Тимчасово немає в наявності
+</div>
+        </div>
+      </div>
+    </div>
+       <!-- БЛОК БРЕНДУ: VERSACE -->
+    <div class="brand-block">
+      <h3 class="brand-name-title">VERSACE</h3>
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V00033312/eyJ3IjoxMDAwLCJoIjoxMDAwLCJvIjoiY2F0YWxvZ1wvcHJvZHVjdFwvXC84XC8wXC84MDExMDAzODA5MjE5XzEuanBnIn0=/versace-eros.jpg" alt="Versace Bright Crystal" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Eros</h4>
+          <div class="product-price">100ml - 4 500₴</div>
+          <div class="product-price">50ml - 3 500₴</div>
+          <div class="product-price">30ml - 2 700₴</div>
+          
+        </div>
+        <div class="product-card">
+          <img src="https://www.brocard.ua/media/catalog/product/cache/V06667812/eyJ3Ijo1MDAsImgiOjUwMCwibyI6ImNhdGFsb2dcL3Byb2R1Y3RcL1wvOFwvMFwvODAxMTAwMzg0NTM1NF8xLmpwZyJ9/versace-eros-flame.webp" style="width: 70%; height: 70%; object-fit: cover; margin-bottom: 20px;">
+          <h4 class="product-name">Eros Flame</h4>
+           <div class="product-price">100ml - 4 700₴</div>
+          <div class="product-price">50ml - 4 000₴</div>
+          <div class="product-price">30ml - 2 900₴</div>
+          
+        </div>
+      </div>
+    </div>
